@@ -40,6 +40,7 @@ func cast_rod() -> void:
 	var hook := hook_scene.instantiate()
 	hooks.push_back(hook)
 	hook.player = self
+	hook.impulse += hook_spawn.global_basis.inverse() * linear_velocity
 	get_tree().root.add_child(hook)
 	hook.global_transform = hook_spawn.global_transform
 	hook.cast()
@@ -49,13 +50,10 @@ func reel_rod() -> void:
 		return
 	
 	var reeling_hook: Hook
-	var i := 0
 	for h in hooks:
 		if h and h.target:
 			reeling_hook = h
 			break
-		
-		i += 1
 	if not reeling_hook:
 		return
 	
@@ -68,13 +66,12 @@ func release_rod() -> void:
 		return
 	
 	var hook: Hook
-	var i := 0
-	while i < len(hooks):
-		hook = hooks[i]
-		if hook and hook.target:
+	for h in hooks:
+		if h and h.target:
+			hook = h
 			break
-		
-		i += 1
+	if not hook:
+		return
 	
 	hook.release()
 
