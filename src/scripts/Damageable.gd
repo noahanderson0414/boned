@@ -11,7 +11,6 @@ func _ready():
 	healthbar.init_health(health)
 
 func _set_health(value):
-	print("Setting Health to: " + str(value))
 	healthbar.health = value
 	health = value
 	if health <= 0:
@@ -25,11 +24,9 @@ func die():
 	max_health += 2
 	health = max_health
 	healthbar.init_health(health)
-	pass
 
 func regen_tick():
 	health = min(max_health, health + regen)
-
 
 func _on_body_entered(body: Node) -> void:
 	if body.name == "Spike Collision":
