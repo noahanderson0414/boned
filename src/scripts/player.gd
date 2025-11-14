@@ -48,9 +48,14 @@ func reel_rod() -> void:
 	if len(hooks) == 0:
 		return
 	
-	var hook: Hook = hooks.front()
-	if not hook or not hook.target:
-		return
+	var hook: Hook
+	var i := 0
+	while i < len(hooks):
+		hook = hooks[i]
+		if hook and hook.target:
+			break
+		
+		i += 1
 	
 	var direction := global_position.direction_to(hook.global_position)
 	var force := direction * reel_force
@@ -60,9 +65,14 @@ func release_rod() -> void:
 	if len(hooks) == 0:
 		return
 	
-	var hook: Hook = hooks.pop_front()
-	if not hook or not hook.target:
-		return
+	var hook: Hook
+	var i := 0
+	while i < len(hooks):
+		hook = hooks[i]
+		if hook and hook.target:
+			break
+		
+		i += 1
 	
 	hook.release()
 
