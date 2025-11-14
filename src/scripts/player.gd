@@ -48,16 +48,18 @@ func reel_rod() -> void:
 	if len(hooks) == 0:
 		return
 	
-	var hook: Hook
+	var reeling_hook: Hook
 	var i := 0
-	while i < len(hooks):
-		hook = hooks[i]
-		if hook and hook.target:
+	for h in hooks:
+		if h and h.target:
+			reeling_hook = h
 			break
 		
 		i += 1
+	if not reeling_hook:
+		return
 	
-	var direction := global_position.direction_to(hook.global_position)
+	var direction := global_position.direction_to(reeling_hook.global_position)
 	var force := direction * reel_force
 	apply_central_force(force)
 

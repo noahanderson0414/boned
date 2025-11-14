@@ -4,6 +4,7 @@ extends Node3D
 @onready var healthbar : Healthbar = $Healthbar
 @export var health : float : set = _set_health
 @export var max_health = 10
+@export var regen = 0
 
 func _ready():
 	health = max_health
@@ -26,6 +27,8 @@ func die():
 	healthbar.init_health(health)
 	pass
 
+func regen_tick():
+	health = min(max_health, health + regen)
 
 
 func _on_body_entered(body: Node) -> void:
